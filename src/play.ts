@@ -17,10 +17,19 @@ export interface Context {
 export async function play(input: Input, context: Context) {
   const songTableId = context.tables.songs.id;
   const fieldMap = context.tables.songs.fieldsMap;
-  const songs = await eidos.currentSpace
-    .table(songTableId)
-    .rows.query({}, { raw: true });
-
+  let songs: Record<string, any>[] = [];
+  if (context.currentRowId) {
+    songs = await eidos.currentSpace.table(songTableId).rows.query(
+      {
+        _id: context.currentRowId,
+      },
+      { raw: true }
+    );
+  } else {
+    songs = await eidos.currentSpace
+      .table(songTableId)
+      .rows.query({}, { raw: true });
+  }
   async function getAwesomePlaylist(name?: string) {
     let songList = songs;
     if (name?.length) {

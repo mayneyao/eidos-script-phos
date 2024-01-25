@@ -16383,7 +16383,17 @@ var getCoverFromFile = async (fileUrl) => {
 async function play(input, context) {
   const songTableId = context.tables.songs.id;
   const fieldMap = context.tables.songs.fieldsMap;
-  const songs = await eidos.currentSpace.table(songTableId).rows.query({}, { raw: true });
+  let songs = [];
+  if (context.currentRowId) {
+    songs = await eidos.currentSpace.table(songTableId).rows.query(
+      {
+        _id: context.currentRowId
+      },
+      { raw: true }
+    );
+  } else {
+    songs = await eidos.currentSpace.table(songTableId).rows.query({}, { raw: true });
+  }
   async function getAwesomePlaylist(name) {
     let songList = songs;
     if (name?.length) {
