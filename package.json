@@ -1,16 +1,20 @@
 {
-  "name": "eidos-script-template",
+  "name": "eidos-script-phos",
   "private": true,
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=browser --format=esm --loader:.html=text --watch",
-    "build": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=browser --format=esm --loader:.html=text"
+    "dev": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=browser --format=esm --loader:.html=text --watch --define:global=window --inject:config/esbuild.inject.js",
+    "build": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=browser --format=esm --loader:.html=text --define:global=window --inject:config/esbuild.inject.js"
   },
   "devDependencies": {
-    "@eidos.space/types": "^0.0.5",
+    "@eidos.space/types": "^0.0.8",
     "esbuild": "^0.19.7",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "music-metadata-browser": "^2.5.10",
+    "process": "^0.11.10"
   }
 }

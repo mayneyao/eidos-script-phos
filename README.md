@@ -1,29 +1,15 @@
-# Eidos Script Template
+# Phos
 
-help developers create a new Eidos script project quickly.
+port [project phos](https://github.com/mayneyao/phos) & [the script](https://www.notion.so/play-d1446c545e4c47a48603381052c3dbb7) to eidos script. help you manage your music and play them in eidos with a single command.
 
-use this template to create a new Eidos script project.
+POC & WIP
 
-## Development
+## Commands
 
-1. install dependencies
-   ```bash
-   pnpm install
-   ```
-2. develop
-   ```bash
-   pnpm dev
-   ```
-3. build
-   ```bash
-   pnpm build
-   ```
-4. deploy
+### scan
 
-   > don't ignore the `dist` folder, it's the output of your script. commit it to git. push build files to github, then people can use your script from github directly.
+scan audio files in current space, and add them to the songs table
 
-   ```bash
-   git add .
-   git commit -m "your commit message"
-   git push
-   ```
+### play
+
+play the song with the given title or from the first song in the songs table

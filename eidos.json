@@ -1,37 +1,66 @@
 {
-    "id": "todo",
-    "name": "Todo",
-    "description": "a simple script to add todo items to the table",
+    "id": "phos",
+    "name": "Phos",
+    "description": "Play music in Eidos",
     "version": "0.0.1",
     "main": "dist/main.js",
-    "inputJSONSchema": {
-        "type": "object",
-        "properties": {
-            "content": {
-                "type": "string"
-            }
+    "commands": [
+        {
+            "name": "play",
+            "description": "play",
+            "inputJSONSchema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    }
+                },
+                "required": []
+            },
+            "outputJSONSchema": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            },
+            "asTableAction": true
         },
-        "required": [
-            "content"
-        ]
-    },
-    "outputJSONSchema": {
-        "type": "object",
-        "properties": {
-            "todoId": {
-                "type": "string"
+        {
+            "name": "scan",
+            "description": "scan audio files in current space, and add them to the songs table",
+            "inputJSONSchema": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            },
+            "outputJSONSchema": {
+                "type": "object",
+                "properties": {},
+                "required": []
             }
-        },
-        "required": [
-            "todoId"
-        ]
-    },
+        }
+    ],
     "tables": [
         {
-            "name": "todo",
+            "name": "songs",
             "fields": [
                 {
                     "name": "title",
+                    "type": "string"
+                },
+                {
+                    "name": "source",
+                    "type": "string"
+                },
+                {
+                    "name": "album",
+                    "type": "string"
+                },
+                {
+                    "name": "artist",
+                    "type": "string"
+                },
+                {
+                    "name": "artists",
                     "type": "string"
                 }
             ]
