@@ -16368,14 +16368,20 @@ init_esbuild_inject();
 // src/helper.ts
 init_esbuild_inject();
 var import_music_metadata_browser = __toESM(require_lib4(), 1);
-var getCoverFromFile = async (fileUrl) => {
-  const file = await fetch(fileUrl);
-  const fileBlob = await file.blob();
+var blobToBase64 = (blob) => {
+  return new Promise((resolve2, reject2) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve2(reader.result);
+    reader.onerror = reject2;
+    reader.readAsDataURL(blob);
+  });
+};
+var getCoverFromFile = async (fileBlob) => {
   const metadata = await (0, import_music_metadata_browser.parseBlob)(fileBlob);
   const cover = (0, import_music_metadata_browser.selectCover)(metadata.common.picture);
   if (cover) {
     const coverBlob = new Blob([cover.data], { type: cover.format });
-    return URL.createObjectURL(coverBlob);
+    return await blobToBase64(coverBlob);
   }
 };
 
@@ -16423,9 +16429,11 @@ async function play(input, context) {
       `spaces${decodeURIComponent(path)}`
     );
     const fileUrl = URL.createObjectURL(file);
+    console.log("fileUrl", fileUrl);
     if (fileUrl) {
       audio.src = fileUrl;
-      const artwork = await getCoverFromFile(fileUrl);
+      const artwork = await getCoverFromFile(file);
+      console.log("artwork", artwork);
       audio.play().then((_) => updateMetadata(artwork)).catch((error) => log(error));
     }
   }

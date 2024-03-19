@@ -62,10 +62,12 @@ export async function play(input: Input, context: Context) {
       `spaces${decodeURIComponent(path)}`
     );
     const fileUrl = URL.createObjectURL(file);
+    console.log("fileUrl", fileUrl);
 
     if (fileUrl) {
       audio.src = fileUrl;
-      const artwork = await getCoverFromFile(fileUrl);
+      const artwork = await getCoverFromFile(file);
+      console.log("artwork", artwork);
       audio
         .play()
         .then((_) => updateMetadata(artwork))
