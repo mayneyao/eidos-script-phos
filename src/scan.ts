@@ -41,11 +41,8 @@ export async function scan(input: Input, context: Context) {
     const source = item.path.replace("spaces/", "https://eidos.space/");
     if (item.mime.startsWith("audio/")) {
       if (!fileSourceSet.has(source)) {
-        const fileUrl = await eidos.currentSpace.file.getBlobURLbyPath(
-          item.path
-        );
-        const file = await fetch(fileUrl!);
-        const fileBlob = await file.blob();
+        const fileBlob = await eidos.currentSpace.file.getBlobByPath(item.path);
+
         const metadata = await parseBlob(fileBlob);
         const { title, album, artist, artists } = metadata.common;
         await eidos.currentSpace.table(songTableId).rows.create(

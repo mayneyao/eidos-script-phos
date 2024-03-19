@@ -16419,9 +16419,10 @@ async function play(input, context) {
     if (url.host == "eidos.space") {
       path = url.pathname;
     }
-    const fileUrl = await eidos.currentSpace.file.getBlobURLbyPath(
+    const file = await eidos.currentSpace.file.getBlobByPath(
       `spaces${decodeURIComponent(path)}`
     );
+    const fileUrl = URL.createObjectURL(file);
     if (fileUrl) {
       audio.src = fileUrl;
       const artwork = await getCoverFromFile(fileUrl);
@@ -16525,11 +16526,7 @@ async function scan(input, context) {
     const source = item.path.replace("spaces/", "https://eidos.space/");
     if (item.mime.startsWith("audio/")) {
       if (!fileSourceSet.has(source)) {
-        const fileUrl = await eidos.currentSpace.file.getBlobURLbyPath(
-          item.path
-        );
-        const file = await fetch(fileUrl);
-        const fileBlob = await file.blob();
+        const fileBlob = await eidos.currentSpace.file.getBlobByPath(item.path);
         const metadata = await (0, import_music_metadata_browser2.parseBlob)(fileBlob);
         const { title, album, artist, artists } = metadata.common;
         await eidos.currentSpace.table(songTableId).rows.create(

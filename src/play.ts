@@ -58,9 +58,10 @@ export async function play(input: Input, context: Context) {
       path = url.pathname;
     }
 
-    const fileUrl = await eidos.currentSpace.file.getBlobURLbyPath(
+    const file = await eidos.currentSpace.file.getBlobByPath(
       `spaces${decodeURIComponent(path)}`
     );
+    const fileUrl = URL.createObjectURL(file);
 
     if (fileUrl) {
       audio.src = fileUrl;
